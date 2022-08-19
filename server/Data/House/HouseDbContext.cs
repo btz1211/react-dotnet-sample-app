@@ -1,8 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 
 public class HouseDbContext: DbContext {
-    public HouseDbContext(DbContextOptions<HouseDbContext> options) : base(options) {}
+    protected readonly IConfiguration configuration;
 
+    public HouseDbContext(IConfiguration configuration) {
+        this.configuration = configuration;
+    }
 
     public DbSet<HouseEntity> Houses => Set<HouseEntity>();
     public DbSet<BidEntity> Bids => Set<BidEntity>();
@@ -11,7 +14,7 @@ public class HouseDbContext: DbContext {
         var folder = Environment.SpecialFolder.LocalApplicationData;
         var path = Environment.GetFolderPath(folder);
         optionsBuilder
-            .UseSqlite($"Data Source = {Path.Join(path, "houses.db")}");
+            .UseNpgsql(this.configuration.GetSection("ConnectionStrings")["WebApiDatabase"]);
     }
 
     protected override void  OnModelCreating(ModelBuilder builder) {
