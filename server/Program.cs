@@ -14,7 +14,7 @@ builder.Services.AddDbContext<HouseDbContext>(o => {
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
 
-if (builder.Environment.IsProduction()) {
+if (builder.Environment.IsProduction() || builder.Environment.IsStaging()) {
     builder.Configuration.AddAzureKeyVault(
         new Uri($"https://{builder.Configuration["KeyVaultName"]}.vault.azure.net/"),
         new DefaultAzureCredential(new DefaultAzureCredentialOptions()));
