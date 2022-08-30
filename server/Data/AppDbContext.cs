@@ -1,9 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 
-public class HouseDbContext: DbContext {
+public class AppDbContext: DbContext {
     protected readonly IConfiguration configuration;
 
-    public HouseDbContext(IConfiguration configuration) {
+    public AppDbContext(IConfiguration configuration) {
         this.configuration = configuration;
     }
 

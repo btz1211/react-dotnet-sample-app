@@ -10,9 +10,9 @@ public interface IHouseRepository {
 
 public class HouseRepository: IHouseRepository {
 
-    private readonly HouseDbContext context;
+    private readonly AppDbContext context;
 
-    public HouseRepository(HouseDbContext context) {
+    public HouseRepository(AppDbContext context) {
         this.context = context;
     }
 

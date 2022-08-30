@@ -46,4 +46,5 @@ az keyvault create --location $location --name $keyvaultNameProd --resource-grou
 ## - need to add access policy to keyvault for each of the web app resource based on their environment - https://docs.microsoft.com/en-us/azure/key-vault/general/assign-access-policy?tabs=azure-portal
 ## - add a secret called "ConnectionStrings--WebApiDatabase" with DB connection string similar to this
 ##  Host={host}; Database={dbName}; Username={user@$serverName}; Password={password}
-## Add firewall rule to allow IP access from local in your databases 
+## - Add firewall rule to allow IP access from local in your databases 
+## run 

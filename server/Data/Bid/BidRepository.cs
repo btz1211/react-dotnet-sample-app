@@ -6,9 +6,9 @@ public interface IBidRepository
 
 public class BidRepository : IBidRepository
 {
-    public readonly HouseDbContext dbContext;
+    public readonly AppDbContext dbContext;
 
-    public BidRepository(HouseDbContext dbContext)
+    public BidRepository(AppDbContext dbContext)
     {
         this.dbContext = dbContext;
     }
