@@ -13,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(o => {
 });
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
+builder.Services.AddScoped<AppDbOptionsBuilder>(sp => new AppDbOptionsBuilder(sp.GetRequiredService<IConfiguration>()));
+
 
 if (builder.Environment.IsProduction() || builder.Environment.IsStaging()) {
     builder.Configuration.AddAzureKeyVault(

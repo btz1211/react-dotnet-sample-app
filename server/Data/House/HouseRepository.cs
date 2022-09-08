@@ -34,7 +34,9 @@ public class HouseRepository: IHouseRepository {
     }
 
     public async Task<HouseDetail> AddHouse(HouseDetail houseDetail) {
-        var houseEntity = this.DtoToEntity(houseDetail);
+
+        var houseEntity = new HouseEntity();
+        this.DtoToEntity(houseEntity, houseDetail);
 
         context.Houses.Add(houseEntity);
         await context.SaveChangesAsync();
@@ -50,7 +52,7 @@ public class HouseRepository: IHouseRepository {
         }
 
         // update the house entity to the new data
-        houseEntity = DtoToEntity(houseDetail);
+        DtoToEntity(houseEntity, houseDetail);
         context.Entry(houseEntity).State = EntityState.Modified;
         await context.SaveChangesAsync();
 
@@ -68,16 +70,13 @@ public class HouseRepository: IHouseRepository {
         await context.SaveChangesAsync();
     }
 
-    private HouseEntity DtoToEntity(HouseDetail houseDetail) {
-        HouseEntity houseEntity = new HouseEntity();
+    private void DtoToEntity(HouseEntity houseEntity, HouseDetail houseDetail) {
         houseEntity.Address = houseDetail.Address;
         houseEntity.Country = houseDetail.Country;
         houseEntity.Description = houseDetail.Description;
         houseEntity.Id = houseDetail.Id;
         houseEntity.Price = houseDetail.Price;
         houseEntity.Photo = houseDetail.Photo;
-
-        return houseEntity;
     }
 
     private HouseDetail EntityToDto(HouseEntity houseEntity) {
