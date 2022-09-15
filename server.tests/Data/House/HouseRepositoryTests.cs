@@ -2,9 +2,13 @@
 
 namespace server.tests
 {
-    public class HouseRepositoryTests
+    public class HouseRepositoryTests : RepositoryTestsBase
     { 
-        static IHouseRepository HouseRepository = new HouseRepository(new InMemoryDbFixture().Context);
+        IHouseRepository HouseRepository;
+
+        public HouseRepositoryTests() {
+            HouseRepository = new HouseRepository(dbFixture.Context);
+        }
 
         [Fact]
         public async void GetAll_RetrievesDataCorrectly()
@@ -32,11 +36,6 @@ namespace server.tests
             // assert data on the new saved house
             HouseDetail? house = await HouseRepository.GetHouse(3);
             Assert.Equal(house, newHouse);
-
-            // clean up houses after
-            await HouseRepository.DeleteHouse(3);
-            List<House> houses = await HouseRepository.GetAll();
-            Assert.Equal(getExpectedHouses(), houses);
         }
 
         [Fact]
@@ -51,11 +50,6 @@ namespace server.tests
             // make sure house is updated
             HouseDetail? house = await HouseRepository.GetHouse(1);
             Assert.Equal(updatedHouse, house);
-
-            // revert the house back
-            await HouseRepository.UpdateHouse(originalHouse);
-            house = await HouseRepository.GetHouse(1);
-            Assert.Equal(originalHouse, house);
         }
 
         private List<House> getExpectedHouses()

@@ -13,6 +13,8 @@ builder.Services.AddDbContext<AppDbContext>(o => {
 });
 builder.Services.AddScoped<IHouseRepository, HouseRepository>();
 builder.Services.AddScoped<IBidRepository, BidRepository>();
+builder.Services.AddScoped<IHouseController, HouseController>();
+builder.Services.AddScoped<IBidController, BidController>();
 builder.Services.AddScoped<AppDbOptionsBuilder>(sp => new AppDbOptionsBuilder(sp.GetRequiredService<IConfiguration>()));
 
 

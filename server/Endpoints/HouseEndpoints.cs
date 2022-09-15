@@ -5,13 +5,13 @@ public static class HouseEndpoints
     public static void UseHouseEndpoints(this WebApplication app)
     {
         // Batch Get
-        app.MapGet("/houses", (IHouseRepository houseRepository) => (
-            houseRepository.GetAll())).Produces<House>(StatusCodes.Status200OK);
+        app.MapGet("/houses", (IHouseController houseController) => (
+            houseController.GetAll())).Produces<House>(StatusCodes.Status200OK);
 
         // Single Get
-        app.MapGet("/houses/{houseId:int}", async (int houseId, IHouseRepository houseRepository) =>
+        app.MapGet("/houses/{houseId:int}", async (int houseId, IHouseController houseController) =>
         {
-            var house = await houseRepository.GetHouse(houseId);
+            var house = await houseController.GetHouse(houseId);
 
             if (house == null)
             {
@@ -23,11 +23,11 @@ public static class HouseEndpoints
         }).ProducesProblem(404).Produces<HouseDetail>(StatusCodes.Status200OK);
 
         // Delete API
-        app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseRepository houseRepository) =>
+        app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseController houseController) =>
         {
             try
             {
-                await houseRepository.DeleteHouse(houseId);
+                houseController.DeleteHouse(houseId);
                 return Results.Ok();
             }
             catch (ArgumentException e)
@@ -37,36 +37,36 @@ public static class HouseEndpoints
         }).ProducesProblem(404).Produces(StatusCodes.Status200OK);
 
         // Create API
-        app.MapPost("/houses", async ([FromBody] HouseDetail houseDetail, IHouseRepository houseRepository) =>
+        app.MapPost("/houses", async ([FromBody] HouseDetail houseDetail, IHouseController houseController) =>
         {
 
-            if (!MiniValidation.MiniValidator.TryValidate(houseDetail, out var errors))
+            try 
             {
-                return Results.ValidationProblem(errors);
+                var newHouse = await houseController.AddHouse(houseDetail);
+                return Results.Created($"houses/{newHouse.Id}", newHouse);
+            } 
+            catch (BadArgumentException e) 
+            {
+                return Results.ValidationProblem(e.Errors);
             }
-            var newHouse = await houseRepository.AddHouse(houseDetail);
-            return Results.Created($"houses/{newHouse.Id}", newHouse);
-
         }).Produces<HouseDetail>(StatusCodes.Status201Created).ProducesValidationProblem();
 
         // Update API
-        app.MapPut("/houses", async ([FromBody] HouseDetail houseDetail, IHouseRepository houseRepository) =>
+        app.MapPut("/houses", async ([FromBody] HouseDetail houseDetail, IHouseController houseController) =>
         {
-            if (!MiniValidation.MiniValidator.TryValidate(houseDetail, out var errors))
+            try 
             {
-                return Results.ValidationProblem(errors);
-            }
-
-            try
-            {
-                var updatedHouse = await houseRepository.UpdateHouse(houseDetail);
+                var updatedHouse = await houseController.UpdateHouse(houseDetail);
                 return Results.Ok(updatedHouse);
-            }
-            catch (ArgumentException e)
+            } 
+            catch (ArgumentException e) 
             {
                 return Results.Problem(e.Message, statusCode: 404);
+            } 
+            catch (BadArgumentException e) 
+            {
+                return Results.ValidationProblem(e.Errors);
             }
-
         }).ProducesProblem(404).ProducesValidationProblem().Produces<HouseDetail>(StatusCodes.Status200OK);
 
     }

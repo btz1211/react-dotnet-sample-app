@@ -35,6 +35,7 @@ public class BidRepository : IBidRepository
     private static BidEntity dtoToEntity(Bid bid)
     {
         var entity = new BidEntity();
+        
         entity.HouseId = bid.HouseId;
         entity.Bidder = bid.Bidder;
         entity.Amount = bid.Amount;
