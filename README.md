@@ -1,6 +1,12 @@
 ### Intro
-This is a learning project for building a single page application (SPA) using ASP.NET and React
-- follow along this repo - https://github.com/RolandGuijt/ps-globomantics-webapi-react/tree/master/Api
+This is a learning project for building a single page application (SPA) using ASP.NET and React. Most of the code comes from this [PluralSight class](https://github.com/RolandGuijt/ps-globomantics-webapi-react/tree/master/Api), other things such as dockerization, Azure deployment configuration and unit + functional tests are my own. 
+
+### Tech-stack
+- Database - Postgres
+- Service - ASP.NET Core
+- Service Test Framework - XUnit
+- UI - ReactJS
+- UI Test + Mock - Storybook
 
 ### Local Setup
 #### Set up secrets
@@ -31,8 +37,6 @@ dotnet ef migrations script
 #### Run Dotnet Server
 - `dotnet run` - start the server locally on port 4000
 
-
-
 #### Build Server Docker image
 - build the image
 ```
@@ -49,5 +53,4 @@ See `azure-resource-creation.bash` for more information on the resources to crea
 - Resource Group
 - Database
 - Key Vault
-- App Service - Beta
-- App Service - Prod
+- App Service
