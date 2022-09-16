@@ -56,3 +56,5 @@ app.MapGet("/", (IConfiguration config) =>
         $"Value: {config.GetSection("ConnectionStrings")["WebApiDatabase"]}"));
 
 app.Run();
+
+public partial class Program { }

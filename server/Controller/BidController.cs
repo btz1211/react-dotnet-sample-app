@@ -31,9 +31,9 @@ public class BidController : IBidController
         return await BidRepository.GetBids(houseId);    
     }
 
-    private async void validateHouse(int houseId) {
+    private void validateHouse(int houseId) {
         // validate to ensure house exists
-        if (await HouseRepository.GetHouse(houseId) == null)
+        if (HouseRepository.GetHouse(houseId).Result == null)
         {
             throw new NotFoundException($"House with ID {houseId} cannot be found");
         }
@@ -41,8 +41,8 @@ public class BidController : IBidController
 
     private void validateBid(Bid bid) {
         if (!MiniValidation.MiniValidator.TryValidate(bid, out var errors))
-            {
-                throw new BadArgumentException(errors);
-            }
+        {
+            throw new BadArgumentException(errors);
+        }
     }
 }

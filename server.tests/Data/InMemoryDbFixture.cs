@@ -10,6 +10,7 @@ namespace server.tests.Data
     {
         private readonly SqliteConnection DbConnection;
         public AppDbContext Context { get; private set; }
+        public DbContextOptions DbContextOptions { get; private set; }
 
         public InMemoryDbFixture()
         {
@@ -18,8 +19,9 @@ namespace server.tests.Data
 
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>()
                 .UseSqlite(DbConnection);
+            DbContextOptions = optionsBuilder.Options;
 
-            Context = new AppDbContext(new AppDbOptionsBuilder(optionsBuilder.Options));
+            Context = new AppDbContext(new AppDbOptionsBuilder(DbContextOptions));
             Context.Database.EnsureDeleted();
             Context.Database.EnsureCreated();
         }

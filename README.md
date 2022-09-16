@@ -37,6 +37,12 @@ dotnet ef migrations script
 #### Run Dotnet Server
 - `dotnet run` - start the server locally on port 4000
 
+#### Run Tests
+##### API
+Service tests are under `server.tests` directory, simply run `dotnet test` will run all the tests. If you want to run individual tests in VS code, open any of the test files, right click on the test and select `Run Tests in Context`
+##### UI
+TBD
+
 #### Build Server Docker image
 - build the image
 ```
