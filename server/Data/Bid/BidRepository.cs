@@ -1,6 +1,6 @@
 public interface IBidRepository
 {
-    Task<List<Bid>> GetBids(int houseId);
+    Task<List<Bid>> GetBids(string houseId);
     Task<Bid> Add(Bid bid);
 }
 
@@ -13,7 +13,7 @@ public class BidRepository : IBidRepository
         this.dbContext = dbContext;
     }
 
-    public async Task<List<Bid>> GetBids(int houseId)
+    public async Task<List<Bid>> GetBids(string houseId)
     {
         var data = dbContext.Bids
         .Where(b => b.HouseId == houseId)
@@ -35,7 +35,7 @@ public class BidRepository : IBidRepository
     private static BidEntity dtoToEntity(Bid bid)
     {
         var entity = new BidEntity();
-        
+        entity.Id = bid.Id;
         entity.HouseId = bid.HouseId;
         entity.Bidder = bid.Bidder;
         entity.Amount = bid.Amount;

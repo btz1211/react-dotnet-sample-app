@@ -14,49 +14,49 @@ public class BidControllerTests {
     [Fact]
     public async void  GetBids_GetsBidsProperly() {
         List<Bid> expectedBids = getMockBids();
-        MockHouseRepository.Setup(m => m.GetHouse(1))
-            .Returns(Task.FromResult(new HouseDetail(1, "", "", "", "",100000)));
-        MockBidRepository.Setup(m => m.GetBids(1)).Returns(Task.FromResult<List<Bid>>(expectedBids));
+        MockHouseRepository.Setup(m => m.GetHouse("house-1"))
+            .Returns(Task.FromResult(new HouseDetail("house-1", "", "", "", "",100000)));
+        MockBidRepository.Setup(m => m.GetBids("house-1")).Returns(Task.FromResult<List<Bid>>(expectedBids));
 
-        List<Bid> bids = await BidController.GetBids(1);    
+        List<Bid> bids = await BidController.GetBids("house-1");    
         Assert.Equal(expectedBids, bids);
     }
 
     [Fact]
     public async void  GetBids_ThrowsNotFoundIfHouseIsUnavailable() {
-        await Assert.ThrowsAsync<NotFoundException>(() => BidController.GetBids(1));
+        await Assert.ThrowsAsync<NotFoundException>(() => BidController.GetBids("dummy"));
     }
 
 
     [Fact]
     public async void  Add_CreatesBidProperly() {
         Bid expectedBid = getMockBids()[0];
-        MockHouseRepository.Setup(m => m.GetHouse(1))
-            .Returns(Task.FromResult(new HouseDetail(1, "", "", "", "",100000)));
+        MockHouseRepository.Setup(m => m.GetHouse("house-1"))
+            .Returns(Task.FromResult(new HouseDetail("house-1", "", "", "", "",100000)));
         MockBidRepository.Setup(m => m.Add(expectedBid)).Returns(Task.FromResult<Bid>(expectedBid));
 
-        Bid bid = await BidController.Add(1, expectedBid);
+        Bid bid = await BidController.Add("house-1", expectedBid);
         Assert.Equal(expectedBid, bid);
     }
 
     [Fact]
     public async void  Add_ThrowsNotFoundIfHouseIsUnavailable() {
-        await Assert.ThrowsAsync<NotFoundException>(() => BidController.Add(1, getMockBids()[0]));
+        await Assert.ThrowsAsync<NotFoundException>(() => BidController.Add("house-1", getMockBids()[0]));
     }
 
     [Fact]
     public async void  Add_ThrowsNotFoundIfBidIsInvalid() {
-        MockHouseRepository.Setup(m => m.GetHouse(1))
-            .Returns(Task.FromResult(new HouseDetail(1, "", "", "", "",100000)));
+        MockHouseRepository.Setup(m => m.GetHouse("house-1"))
+            .Returns(Task.FromResult(new HouseDetail("house-1", "", "", "", "",100000)));
         
-        await Assert.ThrowsAsync<BadArgumentException>(() => BidController.Add(1, new Bid(1, 1, null, 10000)));
+        await Assert.ThrowsAsync<BadArgumentException>(() => BidController.Add("house-1", new Bid("bid-1", "45eeb0f8-3e72-11ed-b878-0242ac120002", null, 10000)));
 
     }
 
     private List<Bid> getMockBids() {
         return new List<Bid>() {
-            new Bid(1, 1, "john doe", 100),
-            new Bid(2, 1, "jane doe", 200)
+            new Bid("bid-1", "house-1", "john doe", 100),
+            new Bid("bid-2", "house-1", "jane doe", 200)
         };
     }
 }

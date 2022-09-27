@@ -1,5 +1,8 @@
+using System.ComponentModel.DataAnnotations;
+
 public class HouseEntity {
-    public int Id{ get; set; }
+    [property: Key]
+    public string Id{ get; set; }
     public string? Address { get; set; }
     public string? Country { get; set; }
     public string? Description { get; set; }

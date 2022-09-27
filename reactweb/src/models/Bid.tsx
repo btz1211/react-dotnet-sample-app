@@ -1,6 +1,6 @@
 export type Bid = {
-    id: number;
-    houseId: number;
+    id: string;
+    houseId: string;
     bidder: string;
     amount: number;
 }

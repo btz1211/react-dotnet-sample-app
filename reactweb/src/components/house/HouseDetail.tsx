@@ -12,10 +12,9 @@ const HouseDetail = () => {
 
   // validate id param and convert to int
   if (!id) throw Error(`House id param is required`);
-  const houseId = parseInt(id);
 
   // retrieve house data
-  const { data, status, isSuccess } = useFetchHouse(houseId);
+  const { data, status, isSuccess } = useFetchHouse(id);
 
   if (!isSuccess) {
     return <APIStatus status={status} />;

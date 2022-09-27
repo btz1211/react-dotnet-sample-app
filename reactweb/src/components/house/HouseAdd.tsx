@@ -3,6 +3,7 @@ import { House } from "../../models/House";
 import { useNavigate } from "react-router-dom";
 import { useAddHouse } from "../../models/HouseHooks";
 import ValidationSummary from "../util/ValidationSummary";
+import { v4 as uuidv4 } from "uuid";
 
 const HouseAdd = () => {
   const nav = useNavigate();
@@ -13,7 +14,7 @@ const HouseAdd = () => {
     country: "",
     description: "",
     price: 0,
-    id: 0,
+    id: uuidv4(),
     photo: "",
   };
   return (

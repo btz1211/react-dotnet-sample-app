@@ -2,8 +2,8 @@ using Microsoft.EntityFrameworkCore;
 
 public interface IHouseRepository {
     Task<List<House>> GetAll();
-    Task<HouseDetail?> GetHouse(int id);
-    Task DeleteHouse(int id);
+    Task<HouseDetail?> GetHouse(string id);
+    Task DeleteHouse(string id);
     Task<HouseDetail> AddHouse(HouseDetail houseDetail);
     Task<HouseDetail> UpdateHouse(HouseDetail houseDetail);
 }
@@ -22,7 +22,7 @@ public class HouseRepository: IHouseRepository {
             row.Description, row.Price))).ToListAsync();
     }
 
-    public async Task<HouseDetail?> GetHouse(int id) {
+    public async Task<HouseDetail?> GetHouse(string id) {
         var result = await context.Houses.SingleOrDefaultAsync(
             h => h.Id == id);
         
@@ -59,7 +59,7 @@ public class HouseRepository: IHouseRepository {
         return EntityToDto(houseEntity);
     }
 
-    public async Task DeleteHouse(int houseId) {
+    public async Task DeleteHouse(string houseId) {
         var houseEntity = await context.Houses.FindAsync(houseId);
 
         if (houseEntity == null) {
@@ -71,6 +71,7 @@ public class HouseRepository: IHouseRepository {
     }
 
     private void DtoToEntity(HouseEntity houseEntity, HouseDetail houseDetail) {
+        houseEntity.Id = houseDetail.Id;
         houseEntity.Address = houseDetail.Address;
         houseEntity.Country = houseDetail.Country;
         houseEntity.Description = houseDetail.Description;

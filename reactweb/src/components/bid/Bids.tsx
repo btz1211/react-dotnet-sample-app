@@ -4,6 +4,7 @@ import { House } from "../../models/House";
 import { Bid } from "../../models/Bid";
 import APIStatus from "../util/APIStatus";
 import { currencyFormatter } from "../../config";
+import { v4 as uuidv4 } from "uuid";
 
 type Args = {
     house : House
@@ -11,7 +12,7 @@ type Args = {
 
 const Bids = ({ house } : Args) => {
     const emptyBid = {
-        id: 0,
+        id: uuidv4(),
         houseId: house.id,
         bidder: "",
         amount: 0

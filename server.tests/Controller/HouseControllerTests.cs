@@ -23,9 +23,9 @@ public class HouseControllerTests {
     public async void GetHouse_GetsHouseProperly() {
         // setup mocks
         HouseDetail expectedHouse = getMockHouseDetail();
-        MockHouseRepository.Setup(m => m.GetHouse(1)).Returns(Task.FromResult(expectedHouse));
+        MockHouseRepository.Setup(m => m.GetHouse("house-1")).Returns(Task.FromResult(expectedHouse));
 
-        HouseDetail house = await HouseController.GetHouse(1);
+        HouseDetail house = await HouseController.GetHouse("house-1");
         Assert.Equal(expectedHouse, house);
     }
 
@@ -61,17 +61,17 @@ public class HouseControllerTests {
 
     private List<House> getMockHouses() {
         return new List<House>() {
-            new House(1, "123 test st.", "US", "Great House", 10000),
-            new House(2, "234 main st.", "US", "Better House", 20000),
+            new House("house-1", "123 test st.", "US", "Great House", 10000),
+            new House("house-2", "234 main st.", "US", "Better House", 20000),
         };
     }
 
     private HouseDetail getMockHouseDetail() {
-        return new HouseDetail(1, "123 test st.", "US", "Great House", "photo", 10000);
+        return new HouseDetail("house-1", "123 test st.", "US", "Great House", "photo", 10000);
     }
 
     private HouseDetail getBadMockHouseDetail() {
         // address is required, thus making this house detail invalid
-        return new HouseDetail(1, null, "US", "Great House", "photo", 10000);
+        return new HouseDetail("bad-house", null, "US", "Great House", "photo", 10000);
     }
 }

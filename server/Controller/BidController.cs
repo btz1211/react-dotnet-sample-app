@@ -1,6 +1,6 @@
 public interface IBidController {
-    Task<List<Bid>> GetBids(int houseId);
-    Task<Bid> Add(int houseId, Bid bid);
+    Task<List<Bid>> GetBids(string houseId);
+    Task<Bid> Add(string houseId, Bid bid);
 }
 
 /* 
@@ -16,7 +16,7 @@ public class BidController : IBidController
         BidRepository = bidRepository;
     }
 
-    public async Task<Bid> Add(int houseId, Bid bid)
+    public async Task<Bid> Add(string houseId, Bid bid)
     {
         validateHouse(houseId);
         validateBid(bid);
@@ -24,14 +24,14 @@ public class BidController : IBidController
         return await BidRepository.Add(bid);    
     }
 
-    public async Task<List<Bid>> GetBids(int houseId)
+    public async Task<List<Bid>> GetBids(string houseId)
     {
         validateHouse(houseId);
 
         return await BidRepository.GetBids(houseId);    
     }
 
-    private void validateHouse(int houseId) {
+    private void validateHouse(string houseId) {
         // validate to ensure house exists
         if (HouseRepository.GetHouse(houseId).Result == null)
         {

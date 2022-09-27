@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
 
 public record Bid(
-    int Id,
-    int HouseId,
+    string Id,
+    string HouseId,
     [property: Required] string Bidder, 
     int Amount
 );

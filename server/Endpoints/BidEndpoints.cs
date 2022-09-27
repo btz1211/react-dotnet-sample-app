@@ -5,7 +5,7 @@ public static class BidEndpoints
     public static void UseBidEndpoints(this WebApplication app)
     {
         // Get Bids for House
-        app.MapGet("/houses/{houseId:int}/bids", async (int houseId, IBidController bidController) =>
+        app.MapGet("/houses/{houseId}/bids", async (string houseId, IBidController bidController) =>
         {
             try {
                 var bids = await bidController.GetBids(houseId);
@@ -17,7 +17,7 @@ public static class BidEndpoints
         }).ProducesProblem(404).Produces(StatusCodes.Status200OK);
 
         // Create Bid
-        app.MapPost("/houses/{houseId:int}/bids", async (int houseId, [FromBody] Bid bid, IBidController bidController) =>
+        app.MapPost("/houses/{houseId}/bids", async (string houseId, [FromBody] Bid bid, IBidController bidController) =>
         {
             try {
                 var newBid = await bidController.Add(houseId, bid);

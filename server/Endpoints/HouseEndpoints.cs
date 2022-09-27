@@ -9,7 +9,7 @@ public static class HouseEndpoints
             houseController.GetAll())).Produces<House>(StatusCodes.Status200OK);
 
         // Single Get
-        app.MapGet("/houses/{houseId:int}", async (int houseId, IHouseController houseController) =>
+        app.MapGet("/houses/{houseId}", async (string houseId, IHouseController houseController) =>
         {
             var house = await houseController.GetHouse(houseId);
 
@@ -23,7 +23,7 @@ public static class HouseEndpoints
         }).ProducesProblem(404).Produces<HouseDetail>(StatusCodes.Status200OK);
 
         // Delete API
-        app.MapDelete("/houses/{houseId:int}", async (int houseId, IHouseController houseController) =>
+        app.MapDelete("/houses/{houseId}", async (string houseId, IHouseController houseController) =>
         {
             try
             {

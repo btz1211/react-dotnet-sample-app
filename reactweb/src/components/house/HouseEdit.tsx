@@ -12,7 +12,7 @@ const HouseEdit = () => {
     throw new Error("House id cannot be null");
   }
 
-  const { data, status, isSuccess } = useFetchHouse(parseInt(id));
+  const { data, status, isSuccess } = useFetchHouse(id);
 
   if (!isSuccess) {
     return <APIStatus status={status} />;

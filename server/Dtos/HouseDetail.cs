@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 
 public record HouseDetail(
-    [property: Key] int Id,
+    [property: Key] string Id,
     [property: Required] string? Address,
     [property: Required] string? Country,
     string? Description,

@@ -2,34 +2,39 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace server.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class HouseDbContextModelSnapshot : ModelSnapshot
+    partial class AppDbContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
-            modelBuilder.HasAnnotation("ProductVersion", "6.0.8");
+            modelBuilder
+                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+
+            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
             modelBuilder.Entity("BidEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<int>("Amount")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.Property<string>("Bidder")
                         .IsRequired()
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
-                    b.Property<int>("HouseId")
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("HouseId")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.HasKey("Id");
 
@@ -40,61 +45,60 @@ namespace server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = "45ee9f64-3e72-11ed-b878-0242ac120002",
                             Amount = 200000,
                             Bidder = "Sonia Reading",
-                            HouseId = 1
+                            HouseId = "45eeb0f8-3e72-11ed-b878-0242ac120002"
                         },
                         new
                         {
-                            Id = 2,
+                            Id = "45eea252-3e72-11ed-b878-0242ac120002",
                             Amount = 202400,
                             Bidder = "Dick Johnson",
-                            HouseId = 1
+                            HouseId = "45eeb0f8-3e72-11ed-b878-0242ac120002"
                         },
                         new
                         {
-                            Id = 3,
+                            Id = "45eea39c-3e72-11ed-b878-0242ac120002",
                             Amount = 302400,
                             Bidder = "Mohammed Vahls",
-                            HouseId = 2
+                            HouseId = "45eeaef0-3e72-11ed-b878-0242ac120002"
                         },
                         new
                         {
-                            Id = 4,
+                            Id = "45eea4d2-3e72-11ed-b878-0242ac120002",
                             Amount = 310500,
                             Bidder = "Jane Williams",
-                            HouseId = 2
+                            HouseId = "45eeaef0-3e72-11ed-b878-0242ac120002"
                         },
                         new
                         {
-                            Id = 5,
+                            Id = "45eea73e-3e72-11ed-b878-0242ac120002",
                             Amount = 315400,
                             Bidder = "John Kepler",
-                            HouseId = 2
+                            HouseId = "45eeaef0-3e72-11ed-b878-0242ac120002"
                         });
                 });
 
             modelBuilder.Entity("HouseEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
+                    b.Property<string>("Id")
+                        .HasColumnType("text");
 
                     b.Property<string>("Address")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Country")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<string>("Photo")
-                        .HasColumnType("TEXT");
+                        .HasColumnType("text");
 
                     b.Property<int>("Price")
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -103,7 +107,7 @@ namespace server.Migrations
                     b.HasData(
                         new
                         {
-                            Id = 1,
+                            Id = "45eeb0f8-3e72-11ed-b878-0242ac120002",
                             Address = "123 Test st, New York",
                             Country = "USA",
                             Description = "A beautiful renovated Colonial in the heart of the best City, NYC!",
@@ -111,7 +115,7 @@ namespace server.Migrations
                         },
                         new
                         {
-                            Id = 2,
+                            Id = "45eeaef0-3e72-11ed-b878-0242ac120002",
                             Address = "234 Dummy st, Brooklyn",
                             Country = "USA",
                             Description = "An amazing investment property opportunity in this two-family house",

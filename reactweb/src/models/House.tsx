@@ -1,5 +1,5 @@
 export type House = {
-  id: number;
+  id: string;
   address: string;
   country: string;
   description: string;

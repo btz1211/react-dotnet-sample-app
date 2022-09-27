@@ -1,5 +1,5 @@
 public record House(
-    int Id,
+    string Id,
     string? Address,
     string? Country,
     string? Description,

@@ -5,7 +5,7 @@ import { AxiosError } from "axios";
 import config from "../config";
 import Problem from "../components/util/Problem";
 
-export const useFetchBids = (houseId: number) => {
+export const useFetchBids = (houseId: string) => {
   return useQuery<Bid[], AxiosError>(["bids", houseId], () => 
     axios
       .get(`${config.baseApiUrl}/houses/${houseId}/bids`)

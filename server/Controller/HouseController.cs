@@ -1,8 +1,8 @@
 
 public interface IHouseController {
     Task<List<House>> GetAll();
-    Task<HouseDetail?> GetHouse(int id);
-    void DeleteHouse(int id);
+    Task<HouseDetail?> GetHouse(string id);
+    void DeleteHouse(string id);
     Task<HouseDetail> AddHouse(HouseDetail houseDetail);
     Task<HouseDetail> UpdateHouse(HouseDetail houseDetail);
 }
@@ -21,7 +21,7 @@ public class HouseController : IHouseController {
         return await HouseRepository.GetAll();
     }
 
-    public async Task<HouseDetail?> GetHouse(int houseId) {
+    public async Task<HouseDetail?> GetHouse(string houseId) {
          return await HouseRepository.GetHouse(houseId);
     }
 
@@ -39,7 +39,7 @@ public class HouseController : IHouseController {
         return updatedHouse;
     }
 
-    public async void DeleteHouse(int houseId) {
+    public async void DeleteHouse(string houseId) {
         await HouseRepository.DeleteHouse(houseId);
     }
 
